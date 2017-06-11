@@ -7,8 +7,8 @@ An implementation of [base65536][1] in C#.
 ```csharp
 using CyberDot.Encoding.Base65536;
 
-
-var encoded = Base65536.Encode("hello world"); // Output: 驨ꍬ啯𒁷ꍲᕤ
+var bytes = System.Text.Encoding.UTF8.GetBytes("hello world");
+var encoded = Base65536.Encode(bytes); // Output: 驨ꍬ啯𒁷ꍲᕤ
 
 var decoded = Base65536.Decode(encoded); // Output: hello world 
 ```
