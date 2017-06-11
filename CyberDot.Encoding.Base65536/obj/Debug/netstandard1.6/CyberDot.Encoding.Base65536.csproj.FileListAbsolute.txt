@@ -1,7 +1,0 @@
-C:\Projects\GitHub\Base65536\CyberDot.Encoding.Base65536\bin\Debug\netstandard1.6\CyberDot.Encoding.Base65536.deps.json
-C:\Projects\GitHub\Base65536\CyberDot.Encoding.Base65536\bin\Debug\netstandard1.6\CyberDot.Encoding.Base65536.dll
-C:\Projects\GitHub\Base65536\CyberDot.Encoding.Base65536\bin\Debug\netstandard1.6\CyberDot.Encoding.Base65536.pdb
-C:\Projects\GitHub\Base65536\CyberDot.Encoding.Base65536\obj\Debug\netstandard1.6\CyberDot.Encoding.Base65536.csprojResolveAssemblyReference.cache
-C:\Projects\GitHub\Base65536\CyberDot.Encoding.Base65536\obj\Debug\netstandard1.6\CyberDot.Encoding.Base65536.AssemblyInfo.cs
-C:\Projects\GitHub\Base65536\CyberDot.Encoding.Base65536\obj\Debug\netstandard1.6\CyberDot.Encoding.Base65536.dll
-C:\Projects\GitHub\Base65536\CyberDot.Encoding.Base65536\obj\Debug\netstandard1.6\CyberDot.Encoding.Base65536.pdb
