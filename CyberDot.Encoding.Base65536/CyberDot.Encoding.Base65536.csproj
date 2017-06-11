@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>CyberDot</Authors>
+    <Company>CyberDot</Company>
+    <Description />
+    <PackageTags>Base65536, Encoding</PackageTags>
+  </PropertyGroup>
+
+</Project>

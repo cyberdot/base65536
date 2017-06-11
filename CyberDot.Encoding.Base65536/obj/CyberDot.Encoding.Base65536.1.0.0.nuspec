@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>CyberDot.Encoding.Base65536</id>
+    <version>1.0.0</version>
+    <authors>CyberDot</authors>
+    <owners>CyberDot</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Package Description</description>
+    <tags>Base65536, Encoding</tags>
+    <dependencies>
+      <group targetFramework=".NETStandard1.6">
+        <dependency id="NETStandard.Library" version="1.6.1" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="C:\Projects\GitHub\Base65536\CyberDot.Encoding.Base65536\bin\Debug\netstandard1.6\CyberDot.Encoding.Base65536.dll" target="lib\netstandard1.6\CyberDot.Encoding.Base65536.dll" />
+  </files>
+</package>

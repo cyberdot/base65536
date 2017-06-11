@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CyberDot.Encoding.Base65536", "CyberDot.Encoding.Base65536\CyberDot.Encoding.Base65536.csproj", "{C021E149-EB05-4EF0-9A4C-78A0808AC413}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CyberDot.Encoding.Base65536.Tests", "CyberDot.Encoding.Base65536.Tests\CyberDot.Encoding.Base65536.Tests.csproj", "{F4232660-0EA0-432E-8713-F4612E88AA80}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C021E149-EB05-4EF0-9A4C-78A0808AC413}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C021E149-EB05-4EF0-9A4C-78A0808AC413}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C021E149-EB05-4EF0-9A4C-78A0808AC413}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C021E149-EB05-4EF0-9A4C-78A0808AC413}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4232660-0EA0-432E-8713-F4612E88AA80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4232660-0EA0-432E-8713-F4612E88AA80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4232660-0EA0-432E-8713-F4612E88AA80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4232660-0EA0-432E-8713-F4612E88AA80}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
