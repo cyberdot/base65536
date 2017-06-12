@@ -17,7 +17,7 @@ namespace CyberDot.Encoding.Base65536.Tests.TheoryData
         private static ReadOnlyDictionary<string, byte[]> singleBytesBinFiles;
         private static ReadOnlyDictionary<string, byte[]> singleBytesTxtFiles;
 
-        public static Tuple<string, byte[]> ReadString(string filePath)
+        public static Tuple<string, byte[]> Read(string filePath)
         {
             var fileInfo = new FileInfo(filePath);
             
@@ -27,7 +27,7 @@ namespace CyberDot.Encoding.Base65536.Tests.TheoryData
         {
             var files = Directory.GetFiles($"..\\..\\..\\{folderPath}");
             return new ReadOnlyDictionary<string, byte[]>(
-                files.Select(ReadString).ToDictionary<Tuple<string, byte[]>, string, byte[]>(k => k.Item1, v => v.Item2));
+                files.Select(Read).ToDictionary<Tuple<string, byte[]>, string, byte[]>(k => k.Item1, v => v.Item2));
         }
 
         public static ReadOnlyDictionary<string, byte[]> DoubleBytesBinFiles
