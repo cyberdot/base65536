@@ -27,7 +27,7 @@ namespace CyberDot.Encoding.Base65536.Tests.TheoryData
         {
             var files = Directory.GetFiles($"..\\..\\..\\{folderPath}");
             return new ReadOnlyDictionary<string, byte[]>(
-                files.Select(Read).ToDictionary<Tuple<string, byte[]>, string, byte[]>(k => k.Item1, v => v.Item2));
+                files.Select(Read).ToDictionary(k => k.Item1, v => v.Item2));
         }
 
         public static ReadOnlyDictionary<string, byte[]> DoubleBytesBinFiles
@@ -52,7 +52,6 @@ namespace CyberDot.Encoding.Base65536.Tests.TheoryData
                 return doubleBytesTxtFiles;
             }
         }
-
         public static ReadOnlyDictionary<string, byte[]> IgnoreGarbageBinFiles
         {
             get
@@ -75,7 +74,6 @@ namespace CyberDot.Encoding.Base65536.Tests.TheoryData
                 return ignoreGarbageTxtFiles;
             }
         }
-
         public static ReadOnlyDictionary<string, byte[]> PairsTxtFiles
         {
             get
@@ -87,7 +85,6 @@ namespace CyberDot.Encoding.Base65536.Tests.TheoryData
                 return pairsTxtFiles;
             }
         }
-
         public static ReadOnlyDictionary<string, byte[]> PairsBinFiles
         {
             get
@@ -99,7 +96,6 @@ namespace CyberDot.Encoding.Base65536.Tests.TheoryData
                 return pairsBinFiles;
             }
         }
-
         public static ReadOnlyDictionary<string, byte[]> SingleBytesBinFiles
         {
             get
@@ -111,7 +107,6 @@ namespace CyberDot.Encoding.Base65536.Tests.TheoryData
                 return singleBytesBinFiles;
             }
         }
-
         public static ReadOnlyDictionary<string, byte[]> SingleBytesTxtFiles
         {
             get

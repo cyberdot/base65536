@@ -43,7 +43,7 @@ namespace CyberDot.Encoding.Base65536.Tests
         [ClassData(typeof(IgnoreGarbageDecodeData))]
         public void Should_raise_exception_with_ignore_garbage_flag_value_set_to_false(string filename, string input, byte[] expected)
         {
-            Assert.Throws<ArgumentException>(() => Base65536.Decode(input, false));
+            Assert.Throws<ArgumentException>(() => Base65536.Decode(input));
         }
 
         [Theory]
