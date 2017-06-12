@@ -1,6 +1,6 @@
 ﻿# base65536
 
-An implementation of [base65536][1] in C#.
+An implementation of [base65536][1] encoding in C#.
 
 ## Usage
 
