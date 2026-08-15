@@ -25,7 +25,7 @@ namespace CyberDot.Encoding.Base65536.Tests.TheoryData
         }
         public static ReadOnlyDictionary<string, byte[]> ReadAllIn(string folderPath)
         {
-            var files = Directory.GetFiles($"..\\..\\..\\{folderPath}");
+            var files = Directory.GetFiles(folderPath);
             return new ReadOnlyDictionary<string, byte[]>(
                 files.Select(Read).ToDictionary(k => k.Item1, v => v.Item2));
         }

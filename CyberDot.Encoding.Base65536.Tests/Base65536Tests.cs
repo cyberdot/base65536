@@ -9,9 +9,11 @@ namespace CyberDot.Encoding.Base65536.Tests
     {
         [Theory]
         [ClassData(typeof(BadValuesData))]
-        public void Should_raise_exception_on_bad_input(string fileName, string input)
+        public void Should_raise_exception_on_bad_input(string _, string input)
         {
-            Assert.Throws<ArgumentException>(() => Base65536.Decode(input));
+            var act = () => Base65536.Decode(input);
+
+            act.Should().Throw<ArgumentException>();
         }
 
         [Theory]
