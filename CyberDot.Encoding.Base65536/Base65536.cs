@@ -7,7 +7,7 @@ namespace CyberDot.Encoding.Base65536
 {
     public static class Base65536
     {
-        private static readonly Dictionary<int, int> EncodeMap = new Dictionary<int, int>
+        internal static readonly Dictionary<int, int> EncodeMap = new Dictionary<int, int>
         {
             {-1, 5376},{0, 13312},{1, 13568},{2, 13824},{3, 14080},{4, 14336},{5, 14592},{6, 14848},
             {7, 15104},{8, 15360},{9, 15616},{10, 15872},{11, 16128},{12, 16384},{13, 16640},{14, 16896},
@@ -43,7 +43,7 @@ namespace CyberDot.Encoding.Base65536
             {246, 162816},{247, 163072},{248, 163328},{249, 163584},{250, 163840},{251, 164096},{252, 164352},{253, 164608},
             {254, 164864},{255, 165120},
         };
-        private static readonly Dictionary<int, int> DecodeMap = new Dictionary<int, int>
+        internal static readonly Dictionary<int, int> DecodeMap = new Dictionary<int, int>
         {
             {5376, -1},{13312, 0},{13568, 1},{13824, 2},{14080, 3},{14336, 4},{14592, 5},{14848, 6},
             {15104, 7},{15360, 8},{15616, 9},{15872, 10},{16128, 11},{16384, 12},{16640, 13},{16896, 14},
@@ -115,7 +115,10 @@ namespace CyberDot.Encoding.Base65536
 
                 if (blockStart == PaddingBlockStart)
                 {
-                    if (done) throw new ArgumentException("Base65536 sequence continued after final byte");
+                    if (done)
+                    {
+                        throw new ArgumentException("Base65536 sequence continued after final byte");
+                    }
 
                     bytes.Enqueue((byte)p1);
                     done = true;
@@ -124,7 +127,10 @@ namespace CyberDot.Encoding.Base65536
                 {
                     if (DecodeMap.TryGetValue(blockStart, out int p2))
                     {
-                        if (done) throw new ArgumentException("Base65536 sequence continued after final byte");
+                        if (done)
+                        {
+                            throw new ArgumentException("Base65536 sequence continued after final byte");
+                        }
 
                         bytes.Enqueue((byte)p1);
                         bytes.Enqueue((byte)p2);

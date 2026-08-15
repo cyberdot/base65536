@@ -1,0 +1,2 @@
+CyberDot.Encoding.Base65536.Tests/**/*.bin binary
+CyberDot.Encoding.Base65536.Tests/**/*.txt -text

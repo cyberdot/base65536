@@ -17,7 +17,10 @@ namespace CyberDot.Encoding.Base65536
         }
         public static IEnumerable<int> ToCodePoints(this string str)
         {
-            if (str == null) throw new ArgumentNullException(nameof(str));
+            if (str == null)
+            {
+                throw new ArgumentNullException(nameof(str));
+            }
 
             var i = 0;
             while (i < str.Length)

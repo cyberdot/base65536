@@ -1,6 +1,6 @@
 ﻿using System;
+using AwesomeAssertions;
 using CyberDot.Encoding.Base65536.Tests.TheoryData;
-using FluentAssertions;
 using Xunit;
 
 namespace CyberDot.Encoding.Base65536.Tests
@@ -20,39 +20,43 @@ namespace CyberDot.Encoding.Base65536.Tests
         {
             var encoded = Base65536.Encode(input);
 
-            encoded.ShouldBeEquivalentTo(expected);
+            encoded.Should().BeEquivalentTo(expected);
         }
 
         [Theory]
         [ClassData(typeof(DoubleBytesDecodeData))]
-        public void Should_decode_double_bytes_data(string filename, string input, byte[] expected)
+        public void Should_decode_double_bytes_data(string _, string input, byte[] expected)
         {
             var decoded = Base65536.Decode(input);
 
-            decoded.ShouldBeEquivalentTo(expected);
+            decoded.Should().BeEquivalentTo(expected);
         }
 
         [Theory]
         [ClassData(typeof(IgnoreGarbageDecodeData))]
-        public void Should_raise_exception_with_default_ignore_garbage_flag_value(string filename, string input, byte[] expected)
+        public void Should_raise_exception_with_default_ignore_garbage_flag_value(string _, string input, byte[] expected)
         {
-            Assert.Throws<ArgumentException>(() => Base65536.Decode(input));
+            var act = () => Base65536.Decode(input);
+
+            act.Should().Throw<ArgumentException>();
         }
 
         [Theory]
         [ClassData(typeof(IgnoreGarbageDecodeData))]
-        public void Should_raise_exception_with_ignore_garbage_flag_value_set_to_false(string filename, string input, byte[] expected)
+        public void Should_raise_exception_with_ignore_garbage_flag_value_set_to_false(string _, string input, byte[] expected)
         {
-            Assert.Throws<ArgumentException>(() => Base65536.Decode(input));
+            var act = () => Base65536.Decode(input);
+
+            act.Should().Throw<ArgumentException>();
         }
 
         [Theory]
         [ClassData(typeof(IgnoreGarbageDecodeData))]
-        public void Should_decode_with_ignore_garbage_flag_value_set_to_true(string filename, string input, byte[] expected)
+        public void Should_decode_with_ignore_garbage_flag_value_set_to_true(string _, string input, byte[] expected)
         {
             var decoded = Base65536.Decode(input, true);
 
-            decoded.ShouldBeEquivalentTo(expected);
+            decoded.Should().BeEquivalentTo(expected);
         }
 
         [Fact]
@@ -65,7 +69,7 @@ namespace CyberDot.Encoding.Base65536.Tests
                 var expected = (string) item[2];
                 var encoded = Base65536.Encode(input);
 
-                encoded.ShouldBeEquivalentTo(expected);
+                encoded.Should().BeEquivalentTo(expected);
             }
         }
 
@@ -79,7 +83,7 @@ namespace CyberDot.Encoding.Base65536.Tests
                 var expected = (byte[]) item[2];
                 var decoded = Base65536.Decode(input);
 
-                decoded.ShouldBeEquivalentTo(expected);
+                decoded.Should().BeEquivalentTo(expected);
             }
         }
 
@@ -89,7 +93,7 @@ namespace CyberDot.Encoding.Base65536.Tests
         {
             var encoded = Base65536.Encode(input);
 
-            encoded.ShouldBeEquivalentTo(expected);
+            encoded.Should().BeEquivalentTo(expected);
         }
 
         [Theory]
@@ -98,7 +102,7 @@ namespace CyberDot.Encoding.Base65536.Tests
         {
             var decoded = Base65536.Decode(input);
 
-            decoded.ShouldBeEquivalentTo(expected);
+            decoded.Should().BeEquivalentTo(expected);
         }
     }
 }
