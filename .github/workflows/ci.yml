@@ -1,0 +1,46 @@
+name: CI
+
+# Integration build: compiles the solution, runs the test suite, and verifies the
+# NuGet package still packs cleanly. Nothing is uploaded as a workflow artifact -
+# this is a build/test gate, not a release.
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore
+        run: dotnet restore Base65536.sln
+
+      - name: Build
+        run: dotnet build Base65536.sln --configuration Debug --no-restore
+
+      - name: Test
+        run: dotnet test Base65536.sln --configuration Debug --no-build --verbosity normal
+
+      - name: Verify NuGet package generation
+        # Packed to the runner's temp directory and never uploaded, so this step
+        # only proves packaging succeeds - it leaves nothing behind.
+        run: >
+          dotnet pack CyberDot.Encoding.Base65536/CyberDot.Encoding.Base65536.csproj
+          --configuration Debug
+          --no-build
+          --output "${{ runner.temp }}/nupkg-verify"
