@@ -36,7 +36,7 @@ namespace CyberDot.Encoding.Base65536.Tests.TheoryData
             {
                 if (doubleBytesBinFiles == null)
                 {
-                    doubleBytesBinFiles = ReadAllIn("DoubledBytes\\bin");
+                    doubleBytesBinFiles = ReadAllIn("DoubledBytes\\binary");
                 }
                 return doubleBytesBinFiles;
             }
@@ -47,7 +47,7 @@ namespace CyberDot.Encoding.Base65536.Tests.TheoryData
             {
                 if (doubleBytesTxtFiles == null)
                 {
-                    doubleBytesTxtFiles = ReadAllIn("DoubledBytes\\txt");
+                    doubleBytesTxtFiles = ReadAllIn("DoubledBytes\\text");
                 }
                 return doubleBytesTxtFiles;
             }
@@ -58,7 +58,7 @@ namespace CyberDot.Encoding.Base65536.Tests.TheoryData
             {
                 if (ignoreGarbageBinFiles == null)
                 {
-                    ignoreGarbageBinFiles = ReadAllIn("IgnoreGarbage\\bin");
+                    ignoreGarbageBinFiles = ReadAllIn("IgnoreGarbage\\binary");
                 }
                 return ignoreGarbageBinFiles;
             }
@@ -69,7 +69,7 @@ namespace CyberDot.Encoding.Base65536.Tests.TheoryData
             {
                 if (ignoreGarbageTxtFiles == null)
                 {
-                    ignoreGarbageTxtFiles = ReadAllIn("IgnoreGarbage\\txt");
+                    ignoreGarbageTxtFiles = ReadAllIn("IgnoreGarbage\\text");
                 }
                 return ignoreGarbageTxtFiles;
             }
@@ -80,7 +80,7 @@ namespace CyberDot.Encoding.Base65536.Tests.TheoryData
             {
                 if (pairsTxtFiles == null)
                 {
-                    pairsTxtFiles = ReadAllIn("Pairs\\txt");
+                    pairsTxtFiles = ReadAllIn("Pairs\\text");
                 }
                 return pairsTxtFiles;
             }
@@ -91,7 +91,7 @@ namespace CyberDot.Encoding.Base65536.Tests.TheoryData
             {
                 if (pairsBinFiles == null)
                 {
-                    pairsBinFiles = ReadAllIn("Pairs\\bin");
+                    pairsBinFiles = ReadAllIn("Pairs\\binary");
                 }
                 return pairsBinFiles;
             }
@@ -102,7 +102,7 @@ namespace CyberDot.Encoding.Base65536.Tests.TheoryData
             {
                 if (singleBytesBinFiles == null)
                 {
-                    singleBytesBinFiles = ReadAllIn("SingleBytes\\bin");
+                    singleBytesBinFiles = ReadAllIn("SingleBytes\\binary");
                 }
                 return singleBytesBinFiles;
             }
@@ -113,7 +113,7 @@ namespace CyberDot.Encoding.Base65536.Tests.TheoryData
             {
                 if (singleBytesTxtFiles == null)
                 {
-                    singleBytesTxtFiles = ReadAllIn("SingleBytes\\txt");
+                    singleBytesTxtFiles = ReadAllIn("SingleBytes\\text");
                 }
                 return singleBytesTxtFiles;
             }
