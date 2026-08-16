@@ -13,20 +13,20 @@ namespace CyberDot.Encoding.Base2048
     /// </summary>
     public class FromBase2048Transform : ICryptoTransform
     {
-        private readonly Decoder _decoder;
+        private readonly Decoder decoder;
 
         // Byte accumulator state, carried across TransformBlock calls.
-        private int _currentByte;
-        private int _numByteBits;
+        private int currentByte;
+        private int numByteBits;
 
         // A repertoire-1 (3-bit, "special") character is only valid as the very last
         // character of the whole stream. Once we've consumed one, seeing any further
         // character at all is an error.
-        private bool _sawSpecialChar;
+        private bool sawSpecialChar;
 
         public FromBase2048Transform(System.Text.Encoding encoding = null)
         {
-            _decoder = (encoding ?? new UTF8Encoding(encoderShouldEmitUTF8Identifier: false, throwOnInvalidBytes: true)).GetDecoder();
+            decoder = (encoding ?? new UTF8Encoding(encoderShouldEmitUTF8Identifier: false, throwOnInvalidBytes: true)).GetDecoder();
         }
 
         public bool CanReuseTransform => true;
@@ -34,9 +34,7 @@ namespace CyberDot.Encoding.Base2048
         public int InputBlockSize => 1;
         public int OutputBlockSize => 1;
 
-        public void Dispose()
-        {
-        }
+        public void Dispose() { }
 
         public int TransformBlock(byte[] inputBuffer, int inputOffset, int inputCount, byte[] outputBuffer, int outputOffset)
         {
@@ -54,10 +52,10 @@ namespace CyberDot.Encoding.Base2048
 
         private void Reset()
         {
-            _decoder.Reset();
-            _currentByte = 0;
-            _numByteBits = 0;
-            _sawSpecialChar = false;
+            decoder.Reset();
+            currentByte = 0;
+            numByteBits = 0;
+            sawSpecialChar = false;
         }
 
         // The Decoder buffers any incomplete multi-byte sequence internally across calls
@@ -65,11 +63,14 @@ namespace CyberDot.Encoding.Base2048
         // need to track our own bit-accumulator state here, not leftover input bytes.
         private byte[] ProcessBytes(byte[] inputBuffer, int inputOffset, int inputCount, bool isFinal)
         {
-            if (inputBuffer == null) throw new ArgumentNullException(nameof(inputBuffer));
+            if (inputBuffer == null)
+            {
+                throw new ArgumentNullException(nameof(inputBuffer));
+            }
 
-            var maxChars = _decoder.GetCharCount(inputBuffer, inputOffset, inputCount, isFinal);
+            var maxChars = decoder.GetCharCount(inputBuffer, inputOffset, inputCount, isFinal);
             var chars = maxChars == 0 ? Array.Empty<char>() : new char[maxChars];
-            var charCount = _decoder.GetChars(inputBuffer, inputOffset, inputCount, chars, 0, isFinal);
+            var charCount = decoder.GetChars(inputBuffer, inputOffset, inputCount, chars, 0, isFinal);
 
             var output = new List<byte>(charCount);
 
@@ -78,7 +79,7 @@ namespace CyberDot.Encoding.Base2048
                 HandleChar(chars[i], output);
             }
 
-            if (isFinal && _currentByte != (1 << _numByteBits) - 1)
+            if (isFinal && currentByte != (1 << numByteBits) - 1)
             {
                 throw new ArgumentException("Padding mismatch");
             }
@@ -93,7 +94,7 @@ namespace CyberDot.Encoding.Base2048
                 throw new ArgumentException("Unrecognised Base2048 character: " + ch);
             }
 
-            if (_sawSpecialChar)
+            if (sawSpecialChar)
             {
                 throw new ArgumentException("Secondary character found before end of input");
             }
@@ -103,7 +104,7 @@ namespace CyberDot.Encoding.Base2048
 
             if (numZBits != BitsPerChar)
             {
-                _sawSpecialChar = true;
+                sawSpecialChar = true;
             }
 
             // Take most significant bit first.
@@ -111,14 +112,14 @@ namespace CyberDot.Encoding.Base2048
             {
                 var bit = (z >> j) & 1;
 
-                _currentByte = (_currentByte << 1) + bit;
-                _numByteBits++;
+                currentByte = (currentByte << 1) + bit;
+                numByteBits++;
 
-                if (_numByteBits == BitsPerByte)
+                if (numByteBits == BitsPerByte)
                 {
-                    output.Add((byte)_currentByte);
-                    _currentByte = 0;
-                    _numByteBits = 0;
+                    output.Add((byte)currentByte);
+                    currentByte = 0;
+                    numByteBits = 0;
                 }
             }
         }

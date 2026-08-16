@@ -91,7 +91,7 @@ namespace CyberDot.Encoding.Base65536.Tests
 
         [Theory]
         [ClassData(typeof(SingleBytesEncodeData))]
-        public void Should_encode_single_bytes_data(string filename, byte[] input, string expected)
+        public void Should_encode_single_bytes_data(string _, byte[] input, string expected)
         {
             var encoded = Base65536.Encode(input);
 
@@ -100,7 +100,7 @@ namespace CyberDot.Encoding.Base65536.Tests
 
         [Theory]
         [ClassData(typeof(SingleBytesDecodeData))]
-        public void Should_decode_single_bytes_data(string filename, string input, byte[] expected)
+        public void Should_decode_single_bytes_data(string _, string input, byte[] expected)
         {
             var decoded = Base65536.Decode(input);
 

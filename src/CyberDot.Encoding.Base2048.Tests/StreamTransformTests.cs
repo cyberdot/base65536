@@ -7,7 +7,7 @@ namespace CyberDot.Encoding.Base2048.Tests;
 
 public class StreamTransformTests
 {
-    private static readonly int[] ChunkSizes = { 1, 2, 3, 4, 5, 7, 11, 13, 64 };
+    private static readonly int[] ChunkSizes = [1, 2, 3, 4, 5, 7, 11, 13, 64];
 
     private static readonly TextEncoding[] SafeEncodings = { TextEncoding.UTF8, TextEncoding.Unicode, TextEncoding.UTF32 };
 
@@ -193,7 +193,7 @@ public class StreamTransformTests
 
     [Theory]
     [MemberData(nameof(SafeEncodingsMemberData))]
-    public void ToBase2048Transform_should_expose_expected_metadata(TextEncoding encoding)
+    public void Should_expose_expected_metadata_when_encoding(TextEncoding encoding)
     {
         var transform = new ToBase2048Transform(encoding);
 
@@ -205,7 +205,7 @@ public class StreamTransformTests
 
     [Theory]
     [MemberData(nameof(SafeEncodingsMemberData))]
-    public void FromBase2048Transform_should_expose_expected_metadata(TextEncoding encoding)
+    public void Should_expose_expected_metadata_when_decoding(TextEncoding encoding)
     {
         var transform = new FromBase2048Transform(encoding);
 
@@ -216,7 +216,7 @@ public class StreamTransformTests
     }
 
     [Fact]
-    public void Transforms_should_default_to_utf8_when_no_encoding_supplied()
+    public void Should_default_to_utf8_when_no_encoding_supplied()
     {
         var data = new byte[] { 1, 2, 3, 4, 5 };
 

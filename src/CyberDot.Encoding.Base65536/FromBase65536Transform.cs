@@ -32,9 +32,7 @@ namespace CyberDot.Encoding.Base65536
         public int InputBlockSize => 1;
         public int OutputBlockSize => 1;
 
-        public void Dispose()
-        {
-        }
+        public void Dispose() { }
 
         public int TransformBlock(byte[] inputBuffer, int inputOffset, int inputCount, byte[] outputBuffer, int outputOffset)
         {

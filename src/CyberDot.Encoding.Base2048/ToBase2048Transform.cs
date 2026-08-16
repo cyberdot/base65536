@@ -13,18 +13,18 @@ namespace CyberDot.Encoding.Base2048
     /// </summary>
     public class ToBase2048Transform : ICryptoTransform
     {
-        private readonly System.Text.Encoding _encoding;
+        private readonly System.Text.Encoding encoding;
 
         // Bit accumulator state, carried across TransformBlock calls: unlike a byte-pair
         // scheme, 8 (bits per byte) never divides evenly into 11 (bits per char), so
         // almost every input byte leaves a partial character pending.
-        private int _z;
-        private int _numZBits;
+        private int z;
+        private int numZBits;
 
         public ToBase2048Transform(System.Text.Encoding encoding = null)
         {
-            _encoding = encoding ?? new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
-            OutputBlockSize = _encoding.GetMaxByteCount(1);
+            this.encoding = encoding ?? new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
+            OutputBlockSize = this.encoding.GetMaxByteCount(1);
         }
 
         public bool CanReuseTransform => true;
@@ -32,9 +32,7 @@ namespace CyberDot.Encoding.Base2048
         public int InputBlockSize => 1;
         public int OutputBlockSize { get; }
 
-        public void Dispose()
-        {
-        }
+        public void Dispose() { }
 
         public int TransformBlock(byte[] inputBuffer, int inputOffset, int inputCount, byte[] outputBuffer, int outputOffset)
         {
@@ -46,14 +44,18 @@ namespace CyberDot.Encoding.Base2048
         public byte[] TransformFinalBlock(byte[] inputBuffer, int inputOffset, int inputCount)
         {
             var result = ProcessBytes(inputBuffer, inputOffset, inputCount, isFinal: true);
-            _z = 0;
-            _numZBits = 0;
+            z = 0;
+            numZBits = 0;
             return result;
         }
 
         private byte[] ProcessBytes(byte[] inputBuffer, int inputOffset, int inputCount, bool isFinal)
         {
-            if (inputBuffer == null) throw new ArgumentNullException(nameof(inputBuffer));
+            if (inputBuffer == null)
+            {
+                throw new ArgumentNullException(nameof(inputBuffer));
+            }
+
             if (inputOffset < 0 || inputCount < 0 || inputOffset + inputCount > inputBuffer.Length)
             {
                 throw new ArgumentOutOfRangeException(nameof(inputCount));
@@ -71,32 +73,32 @@ namespace CyberDot.Encoding.Base2048
                 {
                     var bit = (b >> j) & 1;
 
-                    _z = (_z << 1) + bit;
-                    _numZBits++;
+                    z = (z << 1) + bit;
+                    numZBits++;
 
-                    if (_numZBits == BitsPerChar)
+                    if (numZBits == BitsPerChar)
                     {
-                        WriteChar(Base2048.EncodeMap[_numZBits][_z], output);
-                        _z = 0;
-                        _numZBits = 0;
+                        WriteChar(Base2048.EncodeMap[numZBits][z], output);
+                        z = 0;
+                        numZBits = 0;
                     }
                 }
             }
 
-            if (isFinal && _numZBits != 0)
+            if (isFinal && numZBits != 0)
             {
                 // Final bits require special treatment: pad `z` out with 1s until its
                 // width matches a known repertoire (11 bits, then 3 bits), then encode
                 // as normal against that repertoire.
-                while (!Base2048.EncodeMap.ContainsKey(_numZBits))
+                while (!Base2048.EncodeMap.ContainsKey(numZBits))
                 {
-                    _z = (_z << 1) + 1;
-                    _numZBits++;
+                    z = (z << 1) + 1;
+                    numZBits++;
                 }
 
-                WriteChar(Base2048.EncodeMap[_numZBits][_z], output);
-                _z = 0;
-                _numZBits = 0;
+                WriteChar(Base2048.EncodeMap[numZBits][z], output);
+                z = 0;
+                numZBits = 0;
             }
 
             return output.ToArray();
@@ -104,7 +106,7 @@ namespace CyberDot.Encoding.Base2048
 
         private void WriteChar(char ch, List<byte> output)
         {
-            output.AddRange(_encoding.GetBytes(new[] { ch }));
+            output.AddRange(encoding.GetBytes(new[] { ch }));
         }
     }
 }

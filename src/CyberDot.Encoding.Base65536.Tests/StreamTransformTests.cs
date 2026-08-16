@@ -10,12 +10,12 @@ namespace CyberDot.Encoding.Base65536.Tests
 {
     public class StreamTransformTests
     {
-        private static readonly int[] ChunkSizes = { 1, 2, 3, 4, 5, 7, 13, 64 };
+        private static readonly int[] ChunkSizes = [1, 2, 3, 4, 5, 7, 13, 64];
 
         // Base65536 only uses "safe" Unicode code points (no unassigned code points, no
         // whitespace, no control characters), so the resulting text is equally valid as
         // UTF-8, UTF-16 or UTF-32 - these are the three encodings the transforms support.
-        private static readonly TextEncoding[] SafeEncodings = { TextEncoding.UTF8, TextEncoding.Unicode, TextEncoding.UTF32 };
+        private static readonly TextEncoding[] SafeEncodings = [TextEncoding.UTF8, TextEncoding.Unicode, TextEncoding.UTF32];
 
         private static byte[] EncodeViaCryptoStream(byte[] data, TextEncoding encoding = null)
         {
@@ -131,7 +131,7 @@ namespace CyberDot.Encoding.Base65536.Tests
 
         [Theory]
         [ClassData(typeof(IgnoreGarbageDecodeData))]
-        public void Should_stream_decode_with_ignore_garbage_flag_value_set_to_true(string filename, string input, byte[] expected)
+        public void Should_stream_decode_with_ignore_garbage_flag_value_set_to_true(string _, string input, byte[] expected)
         {
             DecodeViaCryptoStream(AsBytes(input), ignoreGarbage: true).Should().BeEquivalentTo(expected);
         }
@@ -325,7 +325,7 @@ namespace CyberDot.Encoding.Base65536.Tests
         {
             // Every Base65536 code point is 3 or 4 bytes in UTF-8; chop the last byte off
             // so the final block ends mid-sequence.
-            var encoded = AsBytes(Base65536.Encode(new byte[] { 1, 2 }), TextEncoding.UTF8);
+            var encoded = AsBytes(Base65536.Encode([1, 2]), TextEncoding.UTF8);
             var truncated = new byte[encoded.Length - 1];
             Array.Copy(encoded, truncated, truncated.Length);
 
