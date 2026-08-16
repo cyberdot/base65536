@@ -8,9 +8,9 @@ An implementation of [base2048][1] encoding in C#.
 using CyberDot.Encoding.Base2048;
 
 var bytes = System.Text.Encoding.UTF8.GetBytes("hello world");
-var encoded = Base2048.Encode(bytes);
+var encoded = Base2048.Encode(bytes); // Output: ڵϠɲණæஊಢࢷ
 
-var decoded = Base2048.Decode(encoded);
+var decoded = Base2048.Decode(encoded); // Output: hello world
 ```
 
 ### Streaming
