@@ -1,0 +1,22 @@
+name: Release CyberDot.Encoding.Base65536
+
+# Manually-triggered release for the Base65536 package. See _release-package.yml for
+# what this actually does.
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version override (e.g. 1.2.0). Leave empty to use the version in the csproj.'
+        required: false
+        type: string
+
+jobs:
+  release:
+    permissions:
+      contents: write
+    uses: ./.github/workflows/_release-package.yml
+    with:
+      project-path: src/CyberDot.Encoding.Base65536/CyberDot.Encoding.Base65536.csproj
+      tag-prefix: base65536
+      version: ${{ inputs.version }}

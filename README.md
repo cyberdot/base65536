@@ -1,9 +1,16 @@
-﻿# base65536
+# CyberDot.Encoding
 
-An implementation of [base65536][1] encoding in C#.
+Binary-to-text encoding implementations in C#.
 
-Base65536 only uses "safe" Unicode code points (no unassigned code points, no
-whitespace, no control characters), which means the encoded text is equally valid as UTF-8, UTF-16 or UTF-32.
+| Package | NuGet | Description |
+| --- | --- | --- |
+| [CyberDot.Encoding.Base65536](src/CyberDot.Encoding.Base65536) | `CyberDot.Encoding.Base65536` | [Base65536][base65536-js] - packs 2 bytes per character using "safe" Unicode code points, so the encoded text is equally valid as UTF-8, UTF-16 or UTF-32. |
+| [CyberDot.Encoding.Base2048](src/CyberDot.Encoding.Base2048) | `CyberDot.Encoding.Base2048` | [Base2048][base2048-js] - packs 11 bits per character, optimised for services with per-character length limits (e.g. Twitter). |
+
+Both packages expose the same shape of API: a static `Encode`/`Decode` pair for one-shot
+use, plus `ICryptoTransform` implementations (`To*Transform`/`From*Transform`) that plug
+into `CryptoStream` for streaming encode/decode without buffering the whole payload in
+memory.
 
 ## Usage
 
@@ -12,38 +19,39 @@ using CyberDot.Encoding.Base65536;
 
 var bytes = System.Text.Encoding.UTF8.GetBytes("hello world");
 var encoded = Base65536.Encode(bytes); // Output: 驨ꍬ啯𒁷ꍲᕤ
-
-var decoded = Base65536.Decode(encoded); // Output: hello world 
+var decoded = Base65536.Decode(encoded); // Output: hello world
 ```
 
-### Streaming
-
-`ToBase65536Transform`/`FromBase65536Transform` implement
-`ICryptoTransform`, so they plug into `CryptoStream` for streaming encode/decode without
-buffering the whole payload in memory. They default to UTF-8, or accept any of the three UTF encodings
-via an `Encoding` parameter.
-
 ```csharp
-using System.Security.Cryptography;
+using CyberDot.Encoding.Base2048;
 
-using var output = new MemoryStream();
-using (var cryptoStream = new CryptoStream(output, new ToBase65536Transform(), CryptoStreamMode.Write))
-{
-    sourceStream.CopyTo(cryptoStream);
-}
+var bytes = System.Text.Encoding.UTF8.GetBytes("hello world");
+var encoded = Base2048.Encode(bytes); // Output: ڵϠɲණæஊಢࢷ
+var decoded = Base2048.Decode(encoded); // Output: hello world
+```
 
-using var decoded = new MemoryStream();
-using (var cryptoStream = new CryptoStream(encodedStream, new FromBase65536Transform(), CryptoStreamMode.Read))
-{
-    cryptoStream.CopyTo(decoded);
-}
+See each package's own README for streaming usage and further details:
+- [src/CyberDot.Encoding.Base65536/README.md](src/CyberDot.Encoding.Base65536/README.md)
+- [src/CyberDot.Encoding.Base2048/README.md](src/CyberDot.Encoding.Base2048/README.md)
+
+## Solution layout
+
+```
+CyberDot.Encoding.sln
+src/
+  CyberDot.Encoding.Base65536/        library
+  CyberDot.Encoding.Base65536.Tests/  tests
+  CyberDot.Encoding.Base2048/         library
+  CyberDot.Encoding.Base2048.Tests/   tests
 ```
 
 ## Credits
-Javascript original implementation: [base65536](https://github.com/ferno/base65536).
+- Base65536 JavaScript original: [qntm/base65536][base65536-js]
+- Base2048 JavaScript original: [qntm/base2048][base2048-js]
 
 ## License
 
 The MIT License (MIT)
 
-[1]: https://github.com/qntm/base65536
+[base65536-js]: https://github.com/qntm/base65536
+[base2048-js]: https://github.com/qntm/base2048
