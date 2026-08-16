@@ -28,19 +28,19 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Restore
-        run: dotnet restore Base65536.sln
+        run: dotnet restore CyberDot.Encoding.sln
 
       - name: Build
-        run: dotnet build Base65536.sln --configuration Debug --no-restore
+        run: dotnet build CyberDot.Encoding.sln --configuration Debug --no-restore
 
       - name: Test
-        run: dotnet test Base65536.sln --configuration Debug --no-build --verbosity normal
+        run: dotnet test CyberDot.Encoding.sln --configuration Debug --no-build --verbosity normal
 
       - name: Verify NuGet package generation
         # Packed to the runner's temp directory and never uploaded, so this step
         # only proves packaging succeeds - it leaves nothing behind.
         run: >
-          dotnet pack CyberDot.Encoding.Base65536/CyberDot.Encoding.Base65536.csproj
+          dotnet pack src/CyberDot.Encoding.Base65536/CyberDot.Encoding.Base65536.csproj
           --configuration Debug
           --no-build
           --output "${{ runner.temp }}/nupkg-verify"

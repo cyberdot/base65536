@@ -48,7 +48,7 @@ jobs:
             VERSION="${{ github.event.inputs.version }}"
             echo "flag=-p:Version=$VERSION" >> "$GITHUB_OUTPUT"
           else
-            VERSION=$(grep -oPm1 '(?<=<Version>)[^<]+' CyberDot.Encoding.Base65536/CyberDot.Encoding.Base65536.csproj)
+            VERSION=$(grep -oPm1 '(?<=<Version>)[^<]+' src/CyberDot.Encoding.Base65536/CyberDot.Encoding.Base65536.csproj)
             echo "flag=" >> "$GITHUB_OUTPUT"
           fi
 
@@ -68,17 +68,17 @@ jobs:
           fi
 
       - name: Restore
-        run: dotnet restore Base65536.sln
+        run: dotnet restore CyberDot.Encoding.sln
 
       - name: Build (Release)
-        run: dotnet build Base65536.sln --configuration Release --no-restore ${{ steps.version.outputs.flag }}
+        run: dotnet build CyberDot.Encoding.sln --configuration Release --no-restore ${{ steps.version.outputs.flag }}
 
       - name: Test (Release)
-        run: dotnet test Base65536.sln --configuration Release --no-build --verbosity normal
+        run: dotnet test CyberDot.Encoding.sln --configuration Release --no-build --verbosity normal
 
       - name: Pack (Release)
         run: >
-          dotnet pack CyberDot.Encoding.Base65536/CyberDot.Encoding.Base65536.csproj
+          dotnet pack src/CyberDot.Encoding.Base65536/CyberDot.Encoding.Base65536.csproj
           --configuration Release
           --no-build
           --output "${{ github.workspace }}/artifacts"
