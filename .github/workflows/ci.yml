@@ -38,9 +38,11 @@ jobs:
 
       - name: Verify NuGet package generation
         # Packed to the runner's temp directory and never uploaded, so this step
-        # only proves packaging succeeds - it leaves nothing behind.
-        run: >
-          dotnet pack src/CyberDot.Encoding.Base65536/CyberDot.Encoding.Base65536.csproj
-          --configuration Debug
-          --no-build
-          --output "${{ runner.temp }}/nupkg-verify"
+        # only proves packaging succeeds - it leaves nothing behind. Covers every
+        # packable project in the solution, not just one.
+        run: |
+          for project in \
+            src/CyberDot.Encoding.Base65536/CyberDot.Encoding.Base65536.csproj \
+            src/CyberDot.Encoding.Base2048/CyberDot.Encoding.Base2048.csproj; do
+            dotnet pack "$project" --configuration Debug --no-build --output "${{ runner.temp }}/nupkg-verify"
+          done

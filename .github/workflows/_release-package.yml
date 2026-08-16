@@ -1,27 +1,38 @@
-name: Release package
+name: _release-package (reusable)
 
-# Manually-triggered release build. Produces a Release-mode NuGet package
-# (.nupkg + .snupkg), tags master with the release version, and publishes a
-# GitHub Release with the package attached as a downloadable asset.
+# Shared release logic used by the per-package release workflows
+# (release-base65536.yml / release-base2048.yml). Not directly triggerable - it only
+# has a workflow_call trigger.
 #
-# This does NOT push to NuGet.org (or any other package registry) - that
-# still requires your own API key and is a separate, deliberate step you run
-# afterwards against the package attached to the release.
+# Produces a Release-mode NuGet package (.nupkg + .snupkg) for the given project, tags
+# master with a package-scoped release version, and publishes a GitHub Release with the
+# package attached as a downloadable asset.
+#
+# This does NOT push to NuGet.org (or any other package registry) - that still requires
+# your own API key and is a separate, deliberate step you run afterwards against the
+# package attached to the release.
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
+      project-path:
+        description: 'Path to the .csproj to release'
+        required: true
+        type: string
+      tag-prefix:
+        description: 'Prefix for the git tag / release title, e.g. "base65536"'
+        required: true
+        type: string
       version:
-        description: 'Release version override (e.g. 1.2.0). Leave empty to use the version in the csproj.'
+        description: 'Version override (e.g. 1.2.0). Leave empty to use the version in the csproj.'
         required: false
         type: string
-
-permissions:
-  contents: write
 
 jobs:
   package:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Require master
@@ -44,11 +55,11 @@ jobs:
         id: version
         shell: bash
         run: |
-          if [ -n "${{ github.event.inputs.version }}" ]; then
-            VERSION="${{ github.event.inputs.version }}"
+          if [ -n "${{ inputs.version }}" ]; then
+            VERSION="${{ inputs.version }}"
             echo "flag=-p:Version=$VERSION" >> "$GITHUB_OUTPUT"
           else
-            VERSION=$(grep -oPm1 '(?<=<Version>)[^<]+' src/CyberDot.Encoding.Base65536/CyberDot.Encoding.Base65536.csproj)
+            VERSION=$(grep -oPm1 '(?<=<Version>)[^<]+' "${{ inputs.project-path }}")
             echo "flag=" >> "$GITHUB_OUTPUT"
           fi
 
@@ -58,7 +69,7 @@ jobs:
           fi
 
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-          echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=${{ inputs.tag-prefix }}-v$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Ensure tag does not already exist
         run: |
@@ -78,7 +89,7 @@ jobs:
 
       - name: Pack (Release)
         run: >
-          dotnet pack src/CyberDot.Encoding.Base65536/CyberDot.Encoding.Base65536.csproj
+          dotnet pack "${{ inputs.project-path }}"
           --configuration Release
           --no-build
           --output "${{ github.workspace }}/artifacts"
@@ -87,7 +98,7 @@ jobs:
       - name: Upload package artifact
         uses: actions/upload-artifact@v4
         with:
-          name: nuget-package
+          name: nuget-package-${{ inputs.tag-prefix }}
           path: |
             artifacts/*.nupkg
             artifacts/*.snupkg
